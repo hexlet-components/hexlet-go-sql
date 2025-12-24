@@ -1,13 +1,17 @@
+DB_DRIVER:=pgx
+DB_DIALECT:=postgres
+DB_DSN?=postgres://app:secret@localhost:6543/app?sslmode=disable&application_name=hexlet-go-sql
+DB_DRIVER=
+
+
 run:
-	DB_DRIVER?=sqlite3
-	DB_DSN?=file:data.db?_foreign_keys=on&_busy_timeout=5000
-	go run ./cmd/app --cmd=$(CMD) --email=$(EMAIL) --name=$(NAME) --course=$(COURSE) --user=$(USER) --amount=$(AMOUNT)
+	go run ./cmd/app --cmd=$(CMD) --email=$(EMAIL) --name=$(NAME) --course=$(COURSE) --user=$(USER) --course-id=$(COURSE_ID)
 
 migrate:
-	goose -dir ./migrations $(DB_DRIVER) "$(DB_DSN)" up
+	goose -dir ./migrations $(DB_DIALECT) "$(DB_DSN)" up
 
 rollback:
-	goose -dir ./migrations $(DB_DRIVER) "$(DB_DSN)" down
+	goose -dir ./migrations $(DB_DIALECT) "$(DB_DSN)" down
 
 sqlc:
 	sqlc generate
@@ -17,6 +21,14 @@ test-integration:
 
 setup:
 	go mod download
+	go install github.com/sqlc-dev/sqlc/cmd/sqlc@latest
+	go install github.com/pressly/goose/v3/cmd/goose@latest
+
+compose:
+	docker compose up --abort-on-container-exit
+
+compose-down:
+	docker compose down -v --remove-orphans
 
 
 test: test-integration

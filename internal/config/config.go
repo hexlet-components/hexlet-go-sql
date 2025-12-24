@@ -1,39 +1,45 @@
 package config
 
 import (
-    "os"
-    "time"
+	"os"
+	"time"
 )
 
 // Config описывает подключения и таймауты.
 type Config struct {
-    Driver        string
-    DSN           string
-    Command       string
-    Email         string
-    Name          string
-    CourseTitle   string
-    UserID        int64
-    CourseID      int64
-    Amount        int64
-    Timeout       time.Duration
+	Driver      string
+	Dialect     string
+	DSN         string
+	Command     string
+	Email       string
+	Name        string
+	CourseTitle string
+	UserID      int64
+	CourseID    int64
+	Timeout     time.Duration
 }
 
 // Load читает переменные окружения и возвращает конфигурацию по умолчанию.
 func Load() Config {
-    driver := os.Getenv("DB_DRIVER")
-    if driver == "" {
-        driver = "sqlite"
-    }
+	driver := os.Getenv("DB_DRIVER")
+	if driver == "" {
+		driver = "pgx"
+	}
 
-    dsn := os.Getenv("DB_DSN")
-    if dsn == "" {
-        dsn = "file:data.db?_foreign_keys=on&_busy_timeout=5000"
-    }
+	dialect := os.Getenv("DB_DIALECT")
+	if dialect == "" {
+		dialect = "postgres"
+	}
 
-    return Config{
-        Driver:  driver,
-        DSN:     dsn,
-        Timeout: 5 * time.Second,
-    }
+	dsn := os.Getenv("DB_DSN")
+	if dsn == "" {
+		dsn = "postgres://app:secret@localhost:6543/app?sslmode=disable&application_name=hexlet-go-sql"
+	}
+
+	return Config{
+		Driver:  driver,
+		Dialect: dialect,
+		DSN:     dsn,
+		Timeout: 5 * time.Second,
+	}
 }
