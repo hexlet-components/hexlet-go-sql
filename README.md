@@ -19,8 +19,6 @@ This repository contains the reference solution that emerges if you complete eve
 
 ## Getting Started
 
-### PostgreSQL via Docker Compose
-
 ```bash
 docker compose up -d db
 cp .env.example .env                  # optional, overrides env vars
@@ -30,7 +28,15 @@ make migrate
 make run CMD=course-create COURSE="Graph Theory"
 ```
 
-Use `make rollback` to undo the latest migration and `make sqlc` after editing SQL files.
+Useful targets:
+
+```bash
+make migrate         # goose up
+make rollback        # goose down
+make sqlc            # regenerate sqlc code
+make run CMD=...     # run CLI command
+make test-integration
+```
 
 ## Project Layout
 

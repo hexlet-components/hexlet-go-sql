@@ -1,17 +1,11 @@
-DB_DRIVER:=pgx
-DB_DIALECT:=postgres
-DB_DSN?=postgres://app:secret@localhost:6543/app?sslmode=disable&application_name=hexlet-go-sql
-DB_DRIVER=
-
-
 run:
 	go run ./cmd/app --cmd=$(CMD) --email=$(EMAIL) --name=$(NAME) --course=$(COURSE) --user=$(USER) --course-id=$(COURSE_ID)
 
 migrate:
-	goose -dir ./migrations $(DB_DIALECT) "$(DB_DSN)" up
+	goose -dir ./migrations postgres "$(DB_DSN)" up
 
 rollback:
-	goose -dir ./migrations $(DB_DIALECT) "$(DB_DSN)" down
+	goose -dir ./migrations postgres "$(DB_DSN)" down
 
 sqlc:
 	sqlc generate
