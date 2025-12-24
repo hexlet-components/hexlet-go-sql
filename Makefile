@@ -14,6 +14,7 @@ test-integration:
 	go test -tags=integration ./...
 
 setup:
+	cp -n .env.example .env
 	go mod download
 	go install github.com/sqlc-dev/sqlc/cmd/sqlc@latest
 	go install github.com/pressly/goose/v3/cmd/goose@latest
