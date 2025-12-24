@@ -15,5 +15,8 @@ sqlc:
 test-integration:
 	go test -tags=integration ./...
 
+setup:
+	go mod download
+
 
 test: test-integration
