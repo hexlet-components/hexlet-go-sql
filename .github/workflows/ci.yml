@@ -1,0 +1,29 @@
+name: CI
+
+# Тестов в репозитории пока нет, поэтому сборка и статические проверки это всё,
+# что здесь можно подтвердить. Шаг `make test` намеренно не заводится: на пустом
+# наборе `go test ./...` возвращает `no test files` и нулевой код, то есть
+# зелёный CI не значил бы ничего.
+on:
+  - push
+  - pull_request
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-go@v7
+        with:
+          go-version: "1.26"
+
+      - name: Install dependencies
+        run: make install
+
+      - name: Check lint
+        run: make lint
+
+      - name: Build
+        run: make build
