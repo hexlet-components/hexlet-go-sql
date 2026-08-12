@@ -1,5 +1,11 @@
+# USER занят окружением: make подхватывает имя пользователя из шелла, и флаг
+# --user, объявленный как int64, падает на parse error. Числовые флаги идут со
+# своими значениями по умолчанию, иначе пустая строка тоже не разбирается.
+USER_ID ?= 0
+COURSE_ID ?= 0
+
 run:
-	go run ./cmd/app --cmd=$(CMD) --email=$(EMAIL) --name=$(NAME) --course=$(COURSE) --user=$(USER) --course-id=$(COURSE_ID)
+	go run ./cmd/app --cmd=$(CMD) --email=$(EMAIL) --name=$(NAME) --course=$(COURSE) --user=$(USER_ID) --course-id=$(COURSE_ID)
 
 migrate:
 	goose -dir ./migrations postgres "$(DB_DSN)" up
