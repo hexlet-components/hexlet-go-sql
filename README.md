@@ -19,8 +19,8 @@
 
 ## Requirements
 
-* Go 1.26
-* Docker и Docker Compose, чтобы поднять PostgreSQL локально
+- Go 1.26
+- Docker и Docker Compose, чтобы поднять PostgreSQL локально
 
 `sqlc` и `goose` ставить отдельно не нужно: они объявлены в `go.mod` директивой
 `tool` и зовутся через `go tool`. Версия инструмента лежит там же, где версии
