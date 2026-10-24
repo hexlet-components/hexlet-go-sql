@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS course_members (
     joined_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     PRIMARY KEY (user_id, course_id)
 );
-CREATE INDEX IF NOT EXISTS idx_course_members_course_id ON course_members(course_id);
+CREATE INDEX IF NOT EXISTS idx_course_members_course_id ON course_members (course_id);
 -- +goose StatementEnd
 
 -- +goose Down
